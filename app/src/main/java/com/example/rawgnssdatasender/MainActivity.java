@@ -35,6 +35,8 @@
         private RequestQueue requestQueue;
         private List<Map<String, Object>> gnssDataList;
 
+        private String baseUrl = "http://10.0.0.7:2121";
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -113,7 +115,7 @@
                 @Override
                 public void onGnssNavigationMessageReceived(GnssNavigationMessage event) {
                     Log.d(TAG, "GnssNavigationMessage received");
-//                    sendNavigationMessageToServer(event);
+                    sendNavigationMessageToServer(event);
                 }
 
                 @Override
@@ -146,7 +148,7 @@
 
         private void sendRawDataToServer(List<Map<String, Object>> data) {
             Log.d(TAG, "sendRawDataToServer: Started with data: " + data);
-            String serverUrl = "http://10.0.0.7:2121/gnssdata";
+            String serverUrl = baseUrl+"/gnssdata";
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, serverUrl,
                     response -> Log.d(TAG, "Response: " + response),
@@ -169,7 +171,7 @@
 
         private void sendNavigationMessageToServer(GnssNavigationMessage message) {
             Log.d(TAG, "sendNavigationMessageToServer: Started with message: " + message);
-            String serverUrl = "http://10.0.0.7:2121/gnssnavdata";
+            String serverUrl = baseUrl + "/gnssnavdata";
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, serverUrl,
                     response -> Log.d(TAG, "Response: " + response),
